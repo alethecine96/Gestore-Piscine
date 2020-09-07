@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9@tzcw5&np1q3+-dmmq7wwr_(#%x1tf1^-o$7go4+3o6g7+pc('
-
+# SECRET_KEY = '5c1dbf6969f0fb19e5199049b06611a55656ff717cfb95f2'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gestorepiscine.herokuapp.com']
 
 
 # Application definition

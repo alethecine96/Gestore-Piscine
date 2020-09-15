@@ -20,5 +20,5 @@ class Post(models.Model):
 class Value(models.Model):
     temperature = models.IntegerField()
     
-    def __str__(self):
+    def __int__(self):
         return self.temperature

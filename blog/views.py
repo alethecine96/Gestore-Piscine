@@ -14,10 +14,14 @@ from .models import Post, Value
 def home(request):
     context = {
         'posts': Post.objects.all(),
-        'values': Value.object.all()
+        'values': Value.objects.all()
     }
     return render(request, 'blog/home.html', context)
 
+class ValueListView(ListView):
+    model = Value
+    template_name = 'blog/piscina.html'
+    context_object_name = 'values'
 
 class PostListView(ListView):
     model = Post

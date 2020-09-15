@@ -1,8 +1,5 @@
 {% extends "blog/base.html" %}
 {%block content%}
-	<h1>La tua piscina</h1>
-<div>
-    <h2>Temperatura</h2>
 	{% for value in values %}	  
 		<article class="media content-section">
 		  <div class="media-body">
@@ -12,7 +9,4 @@
 		  </div>
 		</article>
 	{% endfor %}
-	<br>
-    <h2>Misura del Ph</h2>
-</div>
 {% endblock content %}

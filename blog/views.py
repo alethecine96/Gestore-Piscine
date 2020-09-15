@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.decorators.csrf import csrf_protect, crsf_exempt
 from django.views.generic import (
     ListView, 
     DetailView,
@@ -66,6 +67,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
 
+@csrf_exempt
 def piscina(request):
     if request.POST:
         return render(request, 'blog/about.html', {'title': 'About'})

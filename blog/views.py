@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.decorators.csrf import csrf_protect, crsf_exempt
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.generic import (
     ListView, 
     DetailView,

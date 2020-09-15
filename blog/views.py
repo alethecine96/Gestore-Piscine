@@ -7,12 +7,13 @@ from django.views.generic import (
     UpdateView,
     DeleteView
     )
-from .models import Post
+from .models import Post, Value
 
 
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'posts': Post.objects.all(),
+        'values': Value.object.all()
     }
     return render(request, 'blog/home.html', context)
 
@@ -66,4 +67,6 @@ def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
 
 def piscina(request):
+    if request.POST:
+        return render(request, 'blog/about.html', {'title': 'About'})
     return render(request, 'blog/piscina.html', {'title': 'Piscina'})

@@ -3,6 +3,16 @@
 	<h1>La tua piscina</h1>
 <div>
     <h2>Temperatura</h2>
+	{% for value in values %}	  
+		<article class="media content-section">
+		  <div class="media-body">
+			<div class="article-metadata">
+			  <a class="mr-2" href="#">{{ value.temperature }}</a>
+			</div>
+		  </div>
+		</article>
+	{% endfor %}
+	<br>
     <h2>Misura del Ph</h2>
 </div>
 {% endblock content %}

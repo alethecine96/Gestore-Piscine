@@ -22,6 +22,11 @@ class ValueListView(ListView):
     model = Value
     template_name = 'blog/piscina.html'
     context_object_name = 'values'
+    
+    def piscina(request):
+        v = request.POST
+        if v.is_valid():
+            v.save()
 
 class PostListView(ListView):
     model = Post
@@ -71,8 +76,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
 
+"""
 @csrf_exempt
 def piscina(request):
     if request.POST:
         return render(request, 'blog/about.html', {'title': 'About'})
     return render(request, 'blog/piscina.html', {'title': 'Piscina'})
+"""

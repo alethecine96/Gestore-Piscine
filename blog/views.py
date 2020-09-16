@@ -23,11 +23,12 @@ class ValueListView(ListView):
     template_name = 'blog/piscina.html'
     context_object_name = 'values'
     
-    @csrf_exempt
-    def piscina(request):
-        v = request.POST
-        if v.is_valid():
-            v.save()
+    
+@csrf_exempt
+def piscina(request):
+    v = request.POST
+    if v.is_valid():
+        v.save()    
 
 class PostListView(ListView):
     model = Post

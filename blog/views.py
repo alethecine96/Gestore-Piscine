@@ -26,7 +26,7 @@ class ValueListView(ListView):
     
 @csrf_exempt
 def piscina(request):
-    v = request.POST
+    v = request.POST.get('Value')
     if v.is_valid():
         v.save()    
 

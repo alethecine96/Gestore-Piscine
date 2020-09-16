@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {%block content%}
+{% csrf_token %}
 	{% for value in values %}	  
 		<article class="media content-section">
 		  <div class="media-body">

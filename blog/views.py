@@ -91,6 +91,8 @@ def piscina_request(request):
         form = PiscinaForm(request.POST)
         if form.is_valid():
             text = form.cleaned_data['temperature']
+            text += "---"
+            text += form.fields.values()
             return HttpResponse(text)
         return HttpResponse(form.errors)
     return HttpResponse("Failed")

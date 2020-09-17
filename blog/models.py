@@ -20,5 +20,7 @@ class Post(models.Model):
 class Value(models.Model):
     temperature = models.IntegerField()
     ph = models.IntegerField()
+    date = models.DateTimeField(default=timezone.now)
+    
     def __int__(self):
         return self.temperature

@@ -26,15 +26,8 @@ class PiscinaListView(ListView):
     template_name = 'blog/piscina.html'
     context_object_name = 'values'
     form_class = PiscinaForm
-    
-"""
-def piscina(request):
-    print(request.POST)
-    form = PiscinaForm(request.POST)
-    if form.is_valid():
-        t = form.save(commit=false)  
-        t.save()
-"""
+    ordering = ['-date']
+
 
 class PostListView(ListView):
     model = Post
@@ -90,18 +83,7 @@ def piscina_request(request):
     if request.method == 'POST':
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            text = "Temperature:"
-            text += str(form.cleaned_data['temperature'])
-            text += "-Ph:"
-            text += str(form.cleaned_data['ph'])
-            return HttpResponse(text)
-        return HttpResponse(form)
-    return HttpResponse("Failed")
-    
-"""
-@csrf_exempt
-def piscina(request):
-    if request.POST:
-        return render(request, 'blog/about.html', {'title': 'About'})
-    return render(request, 'blog/piscina.html', {'title': 'Piscina'})
-"""
+            values = form.save()
+            values.save()
+            return render(request, 'blog-piscina')
+    return HttpResponse("Failed POST")

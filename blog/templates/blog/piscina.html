@@ -1,13 +1,26 @@
 {% extends "blog/base.html" %}
 {%block content%}
+<h2>Temperatura:</h2>
+<br>
+<form action = "/piscina_request/" method = "POST"> 
 {% csrf_token %}
-	{% for value in values %}	  
-		<article class="media content-section">
-		  <div class="media-body">
-			<div class="article-metadata">
-			  <a class="mr-2" href="#">{{ value.temperature }}</a>
-			</div>
-		  </div>
-		</article>
-	{% endfor %}
+<div class="container">
+		<div class="col-md-8">
+			<label for="name">Temperatura:</label>
+			<input id="name" type="text" name="name" value="{{ name }}">
+			<br>
+			<button type="submit">Submit</button>
+		</div>
+</div>
+<br>
+{% for value in values %}	  
+	<article class="media content-section">
+	  <div class="media-body">
+		<div class="article-metadata">
+		  <a class="mr-2">{{ value.temperature }}</a>
+		</div>
+	  </div>
+	</article>
+</form>
+{% endfor %}
 {% endblock content %}

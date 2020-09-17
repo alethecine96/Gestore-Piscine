@@ -92,6 +92,7 @@ def piscina_request(request):
         if form.is_valid():
             text = form.cleaned_data['temperature']
             return HttpResponse(text)
+        return HttpResponse("POST")
     return HttpResponse("Failed")
     
 """

@@ -4,7 +4,7 @@ from .models import Value
 
 
 class PiscinaForm(forms.Form):
-    temperature = forms.IntegerField()
+    temperature = forms.CharField()
 """
     class Meta:
         model = Value

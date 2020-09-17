@@ -19,6 +19,6 @@ class Post(models.Model):
 
 class Value(models.Model):
     temperature = models.IntegerField()
-    
+    ph = models.IntegerField()
     def __int__(self):
         return self.temperature

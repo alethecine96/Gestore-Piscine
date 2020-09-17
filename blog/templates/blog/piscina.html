@@ -7,7 +7,10 @@
 <div class="container">
 		<div class="col-md-8">
 			<label for="temperature">Temperatura:</label>
-			<input id="temperature" type="text" name="temperature" value="{{ temperature }}">
+			<input id="temperature" type="number" name="temperature" value="{{ temperature }}">
+			<br>
+			<label for="ph">Ph:</label>
+			<input id="ph" type="number" name="ph" value="{{ ph }}">
 			<br>
 			<button type="submit">Submit</button>
 		</div>
@@ -17,7 +20,11 @@
 	<article class="media content-section">
 	  <div class="media-body">
 		<div class="article-metadata">
+		  <label for="temperature">Temperatura:</label>
 		  <a class="mr-2">{{ value.temperature }}</a>
+		  <br>
+		  <label for="temperature">Ph:</label>
+		  <a class="mr-2">{{ value.ph }}</a>
 		</div>
 	  </div>
 	</article>

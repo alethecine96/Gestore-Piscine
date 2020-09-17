@@ -90,11 +90,12 @@ def piscina_request(request):
     if request.method == 'POST':
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            text = form.cleaned_data['temperature']
-            text += "---"
-            text += str(form.fields.values())
+            text = "Temperature:"
+            text += str(form.cleaned_data['temperature'])
+            text += "-Ph:"
+            text += str(form.cleaned_data['ph'])
             return HttpResponse(text)
-        return HttpResponse(form.errors)
+        return HttpResponse(form)
     return HttpResponse("Failed")
     
 """

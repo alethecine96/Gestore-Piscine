@@ -85,6 +85,7 @@ def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
 
 
+@csrf_exempt
 def piscina_request(request):
     if request.method == 'POST':
         print("Post")

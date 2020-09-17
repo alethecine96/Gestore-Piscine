@@ -10,7 +10,7 @@ from django.views.generic import (
     )
 from .models import Post, Value
 from .forms import PiscinaForm
-
+import json
 from django.http import HttpResponse
 
 def home(request):
@@ -88,8 +88,10 @@ def about(request):
 @csrf_exempt
 def piscina_request(request):
     if request.method == 'POST':
-        print("Post")
-        return HttpResponse("POST SUCCESS")
+        form = PiscinaForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['temperature']
+            return HttpResponse(text)
     return HttpResponse("Failed")
     
 """

@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 from django.views.generic import (
     ListView, 
     DetailView,
@@ -26,6 +27,18 @@ class PiscinaListView(ListView):
     context_object_name = 'values'
     form_class = PiscinaForm
     ordering = ['-date']
+
+
+class MiaPiscinaListView(ListView):
+    model = Value
+    template_name = 'blog/mia_piscina.html'
+    context_object_name = 'values'
+    form_class = PiscinaForm
+    
+    def get_queryset(self):
+        usr = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Value.objects.filter(user=usr).order_by('-date') 
+    
     
     
 @csrf_exempt
@@ -38,7 +51,7 @@ def piscina_request(request):
             form.instance.user = request.user
             values = form.save()
             values.save()
-            return render(request, 'blog/home.html')
+            return redirect('blog-home')
     return HttpResponse("Failed POST")
 
 

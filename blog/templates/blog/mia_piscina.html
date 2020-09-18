@@ -1,14 +1,26 @@
 {% extends "blog/base.html" %}
 {%block content%}
-<h2>Aggiornamenti delle Piscine degli utenti:</h2>
+<h2>La mia Piscina:</h2>
 <br>
-{% for value in values %}	  
+<form action = "/piscina_request/" method = "POST"> 
+{% csrf_token %}
+<div class="container">
+		<div class="col-md-8">
+			<label for="temperature">Temperatura:</label>
+			<input id="temperature" type="number" name="temperature" value="{{ temperature }}">
+			<br>
+			<label for="ph">Ph:</label>
+			<input id="ph" type="number" name="ph" value="{{ ph }}">
+			<br>
+			<button type="submit">Submit</button>
+		</div>
+</div>
+<br>
+{% for value in values %}
 	<article class="media content-section">
 	<img class="rounded-circle article-img" src="{{ value.user.profile.image.url }}">
 	  <div class="media-body">
 		<div class="article-metadata">
-		  <label for="date">Piscina di:</label>
-		  <a class="mr-2">{{ value.user }}</a>
 		  <label for="date">Data:</label>
 		  <a class="mr-2">{{ value.date }}</a>
 		  <br>

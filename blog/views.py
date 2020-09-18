@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import (
     ListView, 
     DetailView,
@@ -10,7 +10,6 @@ from django.views.generic import (
     )
 from .models import Post, Value
 from .forms import PiscinaForm
-import json
 from django.http import HttpResponse
 
 def home(request):
@@ -27,6 +26,20 @@ class PiscinaListView(ListView):
     context_object_name = 'values'
     form_class = PiscinaForm
     ordering = ['-date']
+    
+    
+@csrf_exempt
+def piscina_request(request):
+    if request.method == 'POST':
+        form = PiscinaForm(request.POST)
+        if form.is_valid():
+            if(request.user.id == None):
+                return HttpResponse("<h1>Non hai effettuato l'accesso al sito!!</h1>")
+            form.instance.user = request.user
+            values = form.save()
+            values.save()
+            return render(request, 'blog/home.html')
+    return HttpResponse("Failed POST")
 
 
 class PostListView(ListView):
@@ -76,14 +89,3 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
-
-
-@csrf_exempt
-def piscina_request(request):
-    if request.method == 'POST':
-        form = PiscinaForm(request.POST)
-        if form.is_valid():
-            values = form.save()
-            values.save()
-            return render(request, 'blog-piscina')
-    return HttpResponse("Failed POST")

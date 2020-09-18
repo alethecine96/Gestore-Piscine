@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 {%block content%}
-<h2>Temperatura:</h2>
+<h2>Piscina:</h2>
 <br>
 <form action = "/piscina_request/" method = "POST"> 
 {% csrf_token %}
@@ -20,6 +20,8 @@
 	<article class="media content-section">
 	  <div class="media-body">
 		<div class="article-metadata">
+		  <label for="date">Piscina di:</label>
+		  <a class="mr-2">{{ value.user }}</a>
 		  <label for="date">Data:</label>
 		  <a class="mr-2">{{ value.date }}</a>
 		  <br>

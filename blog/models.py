@@ -21,6 +21,7 @@ class Value(models.Model):
     temperature = models.IntegerField()
     ph = models.IntegerField()
     date = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __int__(self):
         return self.temperature

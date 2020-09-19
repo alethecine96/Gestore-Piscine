@@ -44,17 +44,16 @@ class MiaPiscinaListView(ListView):
 @csrf_exempt
 def piscina_request(request):
     if request.method == 'POST':
-        print(request.POST.get('password'))
-        print(User.objects.filter(username=request.POST.get('user')).first())
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            if (request.user.is_authenticated or 
-                       User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
+            if (request.user.is_authenticated):
+                form.instance.user = request.user
+            elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
-                values = form.save()
-                values.save()
-                return HttpResponse("<h1>Post success</h1>")
-            return HttpResponse("<h1>Non hai effettuato l'accesso al sito!!</h1>")
+            values = form.save()
+            values.save()
+            return HttpResponse("<h1>Post success</h1>")
+        return HttpResponse("<h1>Non hai effettuato l'accesso al sito!!</h1>")
     return HttpResponse("Failed POST")
 
 

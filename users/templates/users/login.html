@@ -2,12 +2,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
-        <form method="POST">
+        <form action="/login_request/" method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Log in</legend>
                 {{ form|crispy }}
             </fieldset>
+			<label for="username">Username: </label>
+			<input id="username" type="text" name="username" value="{{ username }}">
+			<br>
+			<label for="password">Password: </label>
+			<input id="password" type="text" name="password" value="{{ password }}">
+			<br>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Login</button>
             </div>

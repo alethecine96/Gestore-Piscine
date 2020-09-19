@@ -11,10 +11,12 @@
 		  <a class="mr-2" href="{% url 'blog-mia_piscina' value.user %}">{{ value.user }}</a>
 		  <br>
 		  <label for="date">Data:</label>
-		  <a class="mr-2">{{ value.date }}</a>
+		  <a class="mr-2">{{ value.date|date:"d/m/Y - H:i" }}</a>
+		</div>
 		  <br>
+		<div class="article-metadata">
 		  <label for="temperature">Temperatura:</label>
-		  <a class="mr-2">{{ value.temperature }}</a>
+		  <a class="mr-2">{{ value.temperature }}°</a>
 		  <br>
 		  <label for="temperature">Ph:</label>
 		  <a class="mr-2">{{ value.ph }}</a>

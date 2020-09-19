@@ -6,7 +6,8 @@
 <form action = "/piscina_request/" method = "POST"> 
 {% csrf_token %}
 <div class="container">
-		<div class="col-md-8">
+		<h3>Aggiungi i dati manualmente:</h3>
+		<div class="col-md-6">
 			<label for="temperature">Temperatura:</label>
 			<input id="temperature" type="number" name="temperature" value="{{ temperature }}">
 			<br>
@@ -24,10 +25,12 @@
 	  <div class="media-body">
 		<div class="article-metadata">
 		  <label for="date">Data:</label>
-		  <a class="mr-2">{{ value.date }}</a>
+		  <a class="mr-2">{{ value.date|date:"d/m/Y - H:i" }}</a>
 		  <br>
+		</div>
+		<div class="article-metadata">
 		  <label for="temperature">Temperatura:</label>
-		  <a class="mr-2">{{ value.temperature }}</a>
+		  <a class="mr-2">{{ value.temperature }}°</a>
 		  <br>
 		  <label for="temperature">Ph:</label>
 		  <a class="mr-2">{{ value.ph }}</a>

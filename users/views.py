@@ -46,7 +46,7 @@ def profile(request):
     return render(request, 'users/profile.html', context)
     
 def log(request):
-    if (User.is_authenticated()):
+    if (request.user.is_authenticated):
         return HttpResponse("<h1>Sei già autenticato</h1>")
     return render(request, 'users/login.html')
 

@@ -12,6 +12,7 @@ from django.views.generic import (
 from .models import Post, Value
 from .forms import PiscinaForm
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
 
 def home(request):
     context = {
@@ -40,14 +41,16 @@ class MiaPiscinaListView(ListView):
         return Value.objects.filter(user=usr).order_by('-date') 
     
     
-    
 @csrf_exempt
 def piscina_request(request):
     if request.method == 'POST':
+        print(request.POST.get('password'))
+        print(User.objects.filter(username=request.POST.get('user')).first())
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            if (request.user.is_authenticated):
-                form.instance.user = request.user
+            if (request.user.is_authenticated or 
+                       User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
+                form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
                 values = form.save()
                 values.save()
                 return HttpResponse("<h1>Post success</h1>")

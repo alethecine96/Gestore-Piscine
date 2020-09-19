@@ -55,8 +55,6 @@ def log(request):
 def login_request(request):
     username = request.POST.get('username', None)
     password = request.POST.get('password', None)
-    print(request.POST.get('username', None))
-    print(request.POST.get('password', None))
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)

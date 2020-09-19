@@ -8,7 +8,8 @@
 	  <div class="media-body">
 		<div class="article-metadata">
 		  <label for="date">Piscina di:</label>
-		  <a class="mr-2">{{ value.user }}</a>
+		  <a class="mr-2" href="{% url 'blog-mia_piscina' value.user %}">{{ value.user }}</a>
+		  <br>
 		  <label for="date">Data:</label>
 		  <a class="mr-2">{{ value.date }}</a>
 		  <br>

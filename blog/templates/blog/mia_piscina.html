@@ -1,7 +1,8 @@
 {% extends "blog/base.html" %}
 {%block content%}
-<h2>La mia Piscina:</h2>
+<h2>La Piscina di {{ view.kwargs.username }}</h2>
 <br>
+{% if view.kwargs.username == user.username %}
 <form action = "/piscina_request/" method = "POST"> 
 {% csrf_token %}
 <div class="container">
@@ -15,6 +16,7 @@
 			<button type="submit">Submit</button>
 		</div>
 </div>
+{% endif %}
 <br>
 {% for value in values %}
 	<article class="media content-section">

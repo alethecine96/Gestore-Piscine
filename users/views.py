@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -45,14 +46,14 @@ def profile(request):
     return render(request, 'users/profile.html', context)
     
 def log(request):
+    if User.is_authenticated:
+        return HttpResponse("<h1>Sei già autenticato</h1>")
     return render(request, 'users/login.html')
 
 @csrf_exempt
 def login_request(request):
     username = request.POST.get('username', None)
     password = request.POST.get('password', None)
-    print(username)
-    print(password)
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)

@@ -46,7 +46,7 @@ def piscina_request(request):
     if request.method == 'POST':
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            if User.is_authenticated:
+            if (User.is_authenticated()):
                 form.instance.user = request.user
                 values = form.save()
                 values.save()

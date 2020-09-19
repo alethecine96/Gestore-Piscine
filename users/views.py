@@ -56,8 +56,8 @@ def login_request(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        return redirect('login_succ')        
-    return redirect('login')
+        return HttpResponse("<h1>Successo Login</h1>")     
+    return HttpResponse("<h1>Fallito Login</h1>")
     
 def login_succ(request):
     return render(request, 'users/login_succ.html')

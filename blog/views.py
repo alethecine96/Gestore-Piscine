@@ -46,12 +46,12 @@ def piscina_request(request):
     if request.method == 'POST':
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            if(request.user.id == None):
-                return HttpResponse("<h1>Non hai effettuato l'accesso al sito!!</h1>")
-            form.instance.user = request.user
-            values = form.save()
-            values.save()
-            return redirect('blog-home')
+            if User.is_authenticated:
+                form.instance.user = request.user
+                values = form.save()
+                values.save()
+                return redirect('blog-home')
+            return HttpResponse("<h1>Non hai effettuato l'accesso al sito!!</h1>")
     return HttpResponse("Failed POST")
 
 

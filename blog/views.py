@@ -13,6 +13,7 @@ from .models import Post, Value
 from .forms import PiscinaForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 def home(request):
     context = {
@@ -46,14 +47,19 @@ def piscina_request(request):
     if request.method == 'POST':
         form = PiscinaForm(request.POST)
         if form.is_valid():
+            if (int(request.POST.get('temperature')) < -20 or int(request.POST.get('temperature')) > 40 
+                or int(request.POST.get('ph')) < 0 or int(request.POST.get('ph')) > 14):
+                messages.error(request, f'I Dati inseriti non sono corretti!')
+                return redirect('blog-home')
             if (request.user.is_authenticated):
                 form.instance.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
             values = form.save()
             values.save()
-            return HttpResponse("<h1>Post success</h1>")
-        return HttpResponse("<h1>Non hai effettuato l'accesso al sito!!</h1>")
+            messages.success(request, f'Dati aggiornati correttamente!')
+            return redirect('blog-home')
+        return redirect('blog-home')
     return HttpResponse("Failed POST")
 
 

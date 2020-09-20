@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from django.contrib.auth.views import LoginView
-from django.http import HttpResponse
-from django.contrib.auth.models import User
+
 
 def register(request):
     if request.method == 'POST':
@@ -44,24 +40,3 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
-    
-def log(request):
-    if (request.user.is_authenticated):
-        return HttpResponse("<h1>Sei già autenticato</h1>")
-    return render(request, 'users/login.html')
-
-
-@csrf_exempt
-def login_request(request):
-    username = request.POST.get('username', None)
-    password = request.POST.get('password', None)
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        if user.is_authenticated:
-            return HttpResponse("<h1>Successo Login</h1>")     
-    return HttpResponse("<h1>Fallito Login</h1>")
-    
-    
-def login_succ(request):
-    return render(request, 'users/login_succ.html')

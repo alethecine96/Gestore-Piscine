@@ -9,10 +9,10 @@
 		<h3>Aggiungi i dati manualmente:</h3>
 		<div class="col-md-6">
 			<label for="temperature">Temperatura:</label>
-			<input id="temperature" type="number" name="temperature" value="{{ temperature }}">
+			<input id="temperature" type="number" step="0.01" name="temperature" value="{{ temperature }}">
 			<br>
 			<label for="ph">Ph:</label>
-			<input id="ph" type="number" name="ph" value="{{ ph }}">
+			<input id="ph" type="number" step="0.01" name="ph" value="{{ ph }}">
 			<br>
 			<button type="submit">Submit</button>
 		</div>

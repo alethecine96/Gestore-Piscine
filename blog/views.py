@@ -49,8 +49,8 @@ def piscina_request(request):
     if request.method == 'POST':
         form = PiscinaForm(request.POST)
         if form.is_valid():
-            if (int(request.POST.get('temperature')) < -20 or int(request.POST.get('temperature')) > 40 
-                or int(request.POST.get('ph')) < 0 or int(request.POST.get('ph')) > 14):
+            if (float(request.POST.get('temperature')) < -20 or float(request.POST.get('temperature')) > 40 
+                or float(request.POST.get('ph')) < 0 or float(request.POST.get('ph')) > 14):
                 messages.warning(request, 'I dati inseriti non sono corretti!')
                 return redirect('blog-home')
             if (request.user.is_authenticated):

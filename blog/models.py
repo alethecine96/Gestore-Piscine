@@ -18,8 +18,8 @@ class Post(models.Model):
         
 
 class Value(models.Model):
-    temperature = models.IntegerField()
-    ph = models.IntegerField()
+    temperature = models.FloatField()
+    ph = models.FloatField()
     date = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     

@@ -14,6 +14,7 @@ from .forms import PiscinaForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.utils.formats import localize
 
 def home(request):
     context = {
@@ -63,6 +64,25 @@ def piscina_request(request):
             return redirect('blog-home')
         return redirect('blog-home')
     return HttpResponse("Failed POST")
+    
+
+def line_chart(request):
+    data = []
+    temperature = []
+    ph = []
+
+    queryset = Value.objects.order_by('-date')
+    for values in queryset:
+        data.append(str(localize(values.date)))
+        temperature.append(values.temperature)
+        ph.append(values.ph)
+        
+    
+    return render(request, 'blog/graph.html', {
+        'temperature': temperature,
+        'data': data,
+        'ph': ph,
+    })
 
 
 class PostListView(ListView):

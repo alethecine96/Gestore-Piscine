@@ -1,0 +1,56 @@
+{% extends "blog/base.html" %}
+{%block content%}
+	<h1>Grafico della temperatura:</h1>
+<div id="container" style="width: 100%;">
+    <canvas id="line-chart"></canvas>
+    </div>
+	<br>
+	<h1>Grafico del ph</h1>
+	<div id="container" style="width: 100%;">
+    <canvas id="line-chart_2"></canvas>
+    </div>
+  
+  <script>
+    var config = {
+      type: 'line',
+      data: {
+        datasets: [{
+          data: {{ temperature|safe }},
+          backgroundColor: [
+            "#822222"
+          ],
+          label: 'Temperatura'
+        }],
+        labels: {{ data|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+	
+	var config2 = {
+      type: 'line',
+      data: {
+        datasets: [{
+          data: {{ ph|safe }},
+          backgroundColor: [
+            "#0040FF"
+          ],
+          label: 'ph'
+        }],
+        labels: {{ data|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+	
+	
+    window.onload = function() {
+      var ctx = document.getElementById('line-chart').getContext('2d');
+	  var ctx2 = document.getElementById('line-chart_2').getContext('2d');
+      window.myLine = new Chart(ctx, config);
+	  window.myLine = new Chart(ctx2, config2);
+    };
+  </script>
+{% endblock content %}

@@ -6,15 +6,24 @@
 <form action = "/piscina_request/" method = "POST"> 
 {% csrf_token %}
 <div class="container">
-		<h3>Aggiungi i dati manualmente:</h3>
-		<div class="col-md-6">
-			<label for="temperature">Temperatura:</label>
-			<input id="temperature" type="number" step="0.01" name="temperature" value="{{ temperature }}">
-			<br>
-			<label for="ph">Ph:</label>
-			<input id="ph" type="number" step="0.01" name="ph" value="{{ ph }}">
-			<br>
-			<button type="submit">Submit</button>
+		<div class = "d-flex flex-md-row">
+			<div class="col-md-8">
+				<h3>Aggiungi i dati manualmente:</h3>
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Temperatura</span>
+				  </div>
+				  <input id="temperature" type="number" step="0.01" name="temperature" class="form-control" aria-describedby="basic-addon1" value="{{ temperature }}">
+				</div>
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Ph</span>
+				  </div>
+				  <input id="ph" type="number" step="0.01" name="ph" class="form-control" aria-describedby="basic-addon1" value="{{ ph }}">
+				</div>
+				<button type="submit" class="btn btn-info">Submit</button>
+			</div>
+			<a type="button" class="btn btn-info btn-lg h-50 mx-auto" href="{% url 'line-chart' %}">Mostrami i Grafici</a>
 		</div>
 </div>
 {% endif %}

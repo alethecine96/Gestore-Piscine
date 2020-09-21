@@ -67,22 +67,25 @@ def piscina_request(request):
     
 
 def line_chart(request):
-    data = []
-    temperature = []
-    ph = []
+    if(request.user.is_authenticated):
+        data = []
+        temperature = []
+        ph = []
 
-    queryset = Value.objects.order_by('-date')
-    for values in queryset:
-        data.append(str(localize(values.date)))
-        temperature.append(values.temperature)
-        ph.append(values.ph)
-        
-    
-    return render(request, 'blog/graph.html', {
-        'temperature': temperature,
-        'data': data,
-        'ph': ph,
-    })
+        queryset = Value.objects.order_by('-date')
+        for values in queryset:
+            if(values.user == request.user):
+                data.append(str(localize(values.date)))
+                temperature.append(values.temperature)
+                ph.append(values.ph)
+        return render(request, 'blog/graph.html', {
+            'temperature': temperature,
+            'data': data,
+            'ph': ph,
+        })
+    else:
+        messages.warning(request, 'Non hai effettuato l\'accesso')
+        return redirect('login')
 
 
 class PostListView(ListView):

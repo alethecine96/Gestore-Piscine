@@ -2,7 +2,30 @@
 {%block content%}
 <h2>Aggiornamenti delle Piscine degli utenti:</h2>
 <br>
-{% for value in values %}	  
+{% for value in values %}
+	{% if value.ph < 7 or value.ph > 8 %}
+	<article class="media warning-section">
+	<img class="rounded-circle article-img" src="{{ value.user.profile.image.url }}">
+	  <div class="media-body">
+		<div class="article-metadata text-light">
+		  <label for="date">Piscina di:</label>
+		  <a class="mr-2 text-dark" href="{% url 'blog-mia_piscina' value.user %}">{{ value.user }}</a>
+		  <br>
+		  <label for="date">Data:</label>
+		  <a class="mr-2">{{ value.date|date:"d/m/Y - H:i" }}</a>
+		</div>
+		  <br>
+		<div class="article-metadata text-light">
+		  <label for="temperature">Temperatura:</label>
+		  <a class="mr-2">{{ value.temperature }}°</a>
+		  <br>
+		  <label for="ph">Ph:</label>
+		  <a class="mr-2">{{ value.ph }}</a>
+		  <h5 class="text-light">ATTENZIONE! CORREGGERE PH</h5>
+		</div>
+	  </div>
+	</article>
+	{%endif%}
 	<article class="media content-section">
 	<img class="rounded-circle article-img" src="{{ value.user.profile.image.url }}">
 	  <div class="media-body">
@@ -23,6 +46,5 @@
 		</div>
 	  </div>
 	</article>
-</form>
 {% endfor %}
 {% endblock content %}

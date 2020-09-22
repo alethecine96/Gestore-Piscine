@@ -3,25 +3,20 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-class Post(models.Model):
-    title = models.TextField()
-    content = models.TextField()
-    date_post = models.DateTimeField(default=timezone.now)    #auto_now_add=True
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Piscina(models.Model):
+    n_piscina = models.IntegerField(default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    def __str__(self):
-        return self.title
-        
-        
-    def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
-        
+    def __int__(self):
+        return self.n_piscina
 
 class Value(models.Model):
     temperature = models.FloatField()
     ph = models.FloatField()
     date = models.DateTimeField(default=timezone.now)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    piscina = models.ForeignKey(Piscina, on_delete=models.CASCADE)
     
     def __int__(self):
         return self.temperature
+

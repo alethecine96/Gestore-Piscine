@@ -15,15 +15,19 @@
 				  </div>
 				  <input id="temperature" type="number" step="0.01" name="temperature" class="form-control" aria-describedby="basic-addon1" value="{{ temperature }}">
 				</div>
+				
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
 					<span class="input-group-text" id="basic-addon1">Ph</span>
 				  </div>
 				  <input id="ph" type="number" step="0.01" name="ph" class="form-control" aria-describedby="basic-addon1" value="{{ ph }}">
 				</div>
+				
+				<input id="n_piscina" type="hidden" name ="n_piscina" value="{{ view.kwargs.n_piscina }}">
 				<button type="submit" class="btn btn-info">Submit</button>
 			</div>
-			<a type="button" class="btn btn-info btn-lg h-50 mx-auto" href="{% url 'line-chart' %}">Mostrami i Grafici</a>
+			
+			<a type="button" class="btn btn-info btn-lg h-50 mx-auto" href="{% url 'line-chart' user.username view.kwargs.n_piscina %}">Mostrami i Grafici</a>
 		</div>
 </div>
 {% endif %}
@@ -52,7 +56,7 @@
 		</div>
 	  </div>
 	</article>
-	{%endif%}
+{%endif%}
 	<article class="media content-section">
 	<img class="rounded-circle article-img" src="{{ value.user.profile.image.url }}">
 	  <div class="media-body">

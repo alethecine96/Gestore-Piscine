@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-
+from blog.models import Piscina
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -11,6 +12,11 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Your account has been created! You are now able to log in')
+            piscina = Piscina()
+            usr = User.objects.last()
+            piscina.user = usr
+            piscina.n_piscina = 1
+            piscina.save()
             return redirect('login')
     else:
         form = UserRegisterForm()

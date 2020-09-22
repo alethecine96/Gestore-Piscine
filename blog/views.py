@@ -3,21 +3,48 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.views.generic import ListView
-from .models import Post, Value
+from .models import Value, Piscina
 from .forms import PiscinaForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.utils.formats import localize
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     context = {
-        'posts': Post.objects.all(),
-        'values': Value.objects.all()
+        'values': Value.objects.all(),
+        'piscine': Piscina.objects.all()
     }
     return render(request, 'blog/home.html', context)
 
+
+class HomeView(ListView):
+    model = Piscina
+    context_object_name = 'piscine'
+    template_name = 'blog/home.html'
     
+    
+def logged_in(request):
+    if request.user.is_authenticated:
+        return redirect('blog-home2')
+    else:
+        messages.warning(request, 'Non hai effettuato l\'accesso')
+        return redirect('login')
+
+    
+@login_required
+def create_pool(request):
+    piscina = Piscina()
+    piscina.user = request.user
+    p = Piscina.objects.filter(user = request.user)
+    n = p.last().n_piscina + 1
+    piscina.n_piscina = n
+    piscina.save()
+    messages.success(request, f'Piscina creata correttamente')
+    return redirect('blog-home2')
+
+ 
 class PiscinaListView(ListView):
     model = Value
     template_name = 'blog/piscina.html'
@@ -36,7 +63,9 @@ class MiaPiscinaListView(ListView):
     
     def get_queryset(self):
         usr = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Value.objects.filter(user=usr).order_by('-date') 
+        queryset = Piscina.objects.filter(user=usr)
+        id = queryset.get(n_piscina = self.kwargs.get('n_piscina'))
+        return Value.objects.filter(piscina=id).order_by('-date') 
     
     
 @csrf_exempt
@@ -52,6 +81,7 @@ def piscina_request(request):
                 form.instance.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
+            form.instance.piscina = Piscina.objects.filter(n_piscina=request.POST.get('n_piscina')).first()
             values = form.save()
             values.save()
             messages.success(request, f'Dati aggiornati correttamente!')
@@ -60,7 +90,7 @@ def piscina_request(request):
     return HttpResponse("Failed POST")
     
 
-def line_chart(request):
+def line_chart(request, username, n_piscina):
     if(request.user.is_authenticated):
         data = []
         temperature = []
@@ -68,10 +98,11 @@ def line_chart(request):
 
         queryset = Value.objects.order_by('-date')
         for values in queryset:
-            if(values.user == request.user):
-                data.append(str(localize(values.date)))
-                temperature.append(values.temperature)
-                ph.append(values.ph)
+            if(values.piscina.user == request.user):
+                if(values.piscina.n_piscina == n_piscina):
+                    data.append(str(localize(values.date)))
+                    temperature.append(values.temperature)
+                    ph.append(values.ph)
         return render(request, 'blog/graph.html', {
             'temperature': temperature,
             'data': data,

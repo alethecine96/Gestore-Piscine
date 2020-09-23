@@ -82,8 +82,7 @@ def piscina_request(request):
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
             queryset = Piscina.objects.filter(user=form.instance.user)
-            #form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
-            form.instance.piscina = queryset.get(n_piscina=1)
+            form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
             values = form.save()
             values.save()
             messages.success(request, f'Dati aggiornati correttamente!')

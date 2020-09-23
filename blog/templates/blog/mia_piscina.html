@@ -1,8 +1,8 @@
 {% extends "blog/base.html" %}
 {%block content%}
-<h2>La Piscina di {{ view.kwargs.username }}</h2>
+<h2>La Piscina di {{ user.username }}</h2>
 <br>
-{% if view.kwargs.username == user.username %}
+{% if view.kwargs.username == user.username%}
 <form action = "/piscina_request/" method = "POST"> 
 {% csrf_token %}
 <div class="container">
@@ -36,12 +36,9 @@
 {% for value in values %}
 {% if value.ph < 7 or value.ph > 8 %}
 	<article class="media warning-section">
-	<img class="rounded-circle article-img" src="{{ value.user.profile.image.url }}">
+	<img class="rounded-circle article-img" src="{{ value.piscina.user.profile.image.url }}">
 	  <div class="media-body">
 		<div class="article-metadata text-light">
-		  <label for="date">Piscina di:</label>
-		  <a class="mr-2 text-dark" href="{% url 'blog-mia_piscina' value.user %}">{{ value.user }}</a>
-		  <br>
 		  <label for="date">Data:</label>
 		  <a class="mr-2">{{ value.date|date:"d/m/Y - H:i" }}</a>
 		</div>

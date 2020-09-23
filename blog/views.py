@@ -78,21 +78,15 @@ def piscina_request(request):
                 messages.warning(request, 'I dati inseriti non sono corretti!')
                 return redirect('blog-home')    
             if (request.user.is_authenticated):
-                queryset = Piscina.objects.filter(user=request.user)
-                form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
-                #form.instance.piscina.user = request.user
+                form.instance.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
-                form.instance.piscina = Piscina.objects.first()
-                #queryset = Piscina.objects.filter(user=User.objects.filter(username=request.POST.get('user')).first())
-                #form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
-                #form.instance.piscina.user = User.objects.filter(username=request.POST.get('user')).first()
+                form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
+            queryset = Piscina.objects.filter(user=form.instance.user)
+            form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
             values = form.save()
             values.save()
-            print(values.piscina.id)
-            print(values.piscina.user)
-            print(values.piscina.n_piscina)
             messages.success(request, f'Dati aggiornati correttamente!')
-            return HttpResponse("<h1>SI!</h1>")
+            return redirect('blog-home')
         return redirect('blog-home2')
     return HttpResponse("Failed POST")
     

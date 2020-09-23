@@ -53,7 +53,7 @@
 		</div>
 	  </div>
 	</article>
-{%endif%}
+{% else %}
 	<article class="media content-section">
 	<img class="rounded-circle article-img" src="{{ value.piscina.user.profile.image.url }}">
 	  <div class="media-body">
@@ -72,5 +72,6 @@
 	  </div>
 	</article>
 </form>
+{%endif%}
 {% endfor %}
 {% endblock content %}

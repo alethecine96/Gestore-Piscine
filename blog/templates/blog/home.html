@@ -2,6 +2,7 @@
 {%block content%}
 	<h2>Le Piscine di {{ user.username }}</h2>
 	<a type="button" class="btn btn-warning btn-lg" href="{% url 'create_pool'%}">Crea una nuova piscina</a>
+	<br><br>
 	{% for piscina in piscine %}	  
 		{% if piscina.user.username == user.username %}
 			<a type="button" class="btn btn-info btn-lg" href="{% url 'blog-mia_piscina' user.username piscina.n_piscina%}">Piscina n° {{ piscina.n_piscina }}</a>

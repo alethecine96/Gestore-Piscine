@@ -67,6 +67,9 @@ class MiaPiscinaListView(ListView):
         id = queryset.get(n_piscina = self.kwargs.get('n_piscina'))
         return Value.objects.filter(piscina=id).order_by('-date') 
     
+    def pool(request, username, n_piscina):
+        return render(request, 'blog/mia_piscina.html')
+    
     
 @csrf_exempt
 def piscina_request(request):

@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 {%block content%}
-<h2>La Piscina di {{ view.kwargs.username }}</h2>
+<h2>La Piscina n°{{ view.kwargs.n_piscina }} di {{ view.kwargs.username }}</h2>
 <br>
 {% if view.kwargs.username == user.username %}
 <form action = "/piscina_request/" method = "POST"> 

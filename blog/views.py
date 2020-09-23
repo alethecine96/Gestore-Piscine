@@ -81,6 +81,7 @@ def piscina_request(request):
                 form.instance.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
+                return HttpResponse(<h1>SI!</h1>)
             queryset = Piscina.objects.filter(user=form.instance.user)
             form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
             values = form.save()

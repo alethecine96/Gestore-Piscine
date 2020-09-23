@@ -4,7 +4,7 @@
 	<a type="button" class="btn btn-warning btn-lg" href="{% url 'create_pool'%}">Crea una nuova piscina</a>
 	{% for piscina in piscine %}	  
 		{% if piscina.user.username == user.username %}
-			<a type="button" class="btn btn-info btn-lg" href="{% url 'blog-mia_piscina' user.username piscina.n_piscina%}">Piscina n° {{ piscina.n_piscina }}</a>
+			<a type="button" class="btn btn-info btn-lg" href="{% url 'blog-mia_piscina' piscina.user.username piscina.n_piscina%}">Piscina n° {{ piscina.n_piscina }}</a>
 		{% endif %}
 	{% endfor %}
 {% endblock content %}

@@ -59,7 +59,7 @@ class MiaPiscinaListView(ListView):
     template_name = 'blog/mia_piscina.html'
     context_object_name = 'values'
     form_class = PiscinaForm
-    paginate_by = 10
+    paginate_by = 7
     
     def get_queryset(self):
         usr = get_object_or_404(User, username=self.kwargs.get('username'))

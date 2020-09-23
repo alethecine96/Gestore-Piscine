@@ -66,7 +66,14 @@ class MiaPiscinaListView(ListView):
         queryset = Piscina.objects.filter(user=usr)
         id = queryset.get(n_piscina = self.kwargs.get('n_piscina'))
         return Value.objects.filter(piscina=id).order_by('-date') 
-    
+        
+    def get_context_data(self, **kwargs):
+       context = super(MiaPiscinaListView, self).get_context_data(**kwargs)
+       context['username'] = self.kwargs.get('username')
+       context['n_piscina'] = self.kwargs.get('n_piscina')
+       print(context)
+       return context    
+        
     
 @csrf_exempt
 def piscina_request(request):
@@ -79,7 +86,9 @@ def piscina_request(request):
                 return redirect('blog-home')    
             if (request.user.is_authenticated):
                 queryset = Piscina.objects.filter(user=request.user)
+                print(form)
                 form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
+                print(form.instance.piscina)
                 #form.instance.piscina.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.piscina = Piscina.objects.first()
@@ -88,9 +97,9 @@ def piscina_request(request):
                 #form.instance.piscina.user = User.objects.filter(username=request.POST.get('user')).first()
             values = form.save()
             values.save()
-            print(values.piscina.id)
-            print(values.piscina.user)
-            print(values.piscina.n_piscina)
+            #print(values.piscina.id)
+            #print(values.piscina.user)
+            #print(values.piscina.n_piscina)
             messages.success(request, f'Dati aggiornati correttamente!')
             return HttpResponse("<h1>SI!</h1>")
         return redirect('blog-home2')

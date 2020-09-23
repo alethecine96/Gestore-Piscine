@@ -76,13 +76,15 @@ def piscina_request(request):
             if (float(request.POST.get('temperature')) < -20 or float(request.POST.get('temperature')) > 40 
                 or float(request.POST.get('ph')) < 0 or float(request.POST.get('ph')) > 14):
                 messages.warning(request, 'I dati inseriti non sono corretti!')
-                return redirect('blog-home')
+                return redirect('blog-home')    
             if (request.user.is_authenticated):
-                form.instance.user = request.user
+                queryset = Piscina.objects.filter(user=request.user)
+                form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
+                #form.instance.piscina.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
-                form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
-            queryset = Piscina.objects.filter(user=form.instance.user)
-            form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
+                queryset = Piscina.objects.filter(user=User.objects.filter(username=request.POST.get('user')).first())
+                form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
+                #form.instance.piscina.user = User.objects.filter(username=request.POST.get('user')).first()
             values = form.save()
             values.save()
             messages.success(request, f'Dati aggiornati correttamente!')

@@ -79,7 +79,6 @@ def piscina_request(request):
                 return redirect('blog-home')
             if (request.user.is_authenticated):
                 form.instance.user = request.user
-                print(form.instance.user)
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
                 form.instance.user = User.objects.filter(username=request.POST.get('user')).first()
             queryset = Piscina.objects.filter(user=form.instance.user)
@@ -87,8 +86,8 @@ def piscina_request(request):
             values = form.save()
             values.save()
             messages.success(request, f'Dati aggiornati correttamente!')
-            return redirect('blog-home')
-        return redirect('blog-home')
+            return redirect('blog-home2')
+        return redirect('blog-home2')
     return HttpResponse("Failed POST")
     
 

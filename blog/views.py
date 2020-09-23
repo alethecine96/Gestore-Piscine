@@ -82,11 +82,15 @@ def piscina_request(request):
                 form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
                 #form.instance.piscina.user = request.user
             elif (User.objects.filter(username=request.POST.get('user')).first().check_password(request.POST.get('password'))):
-                queryset = Piscina.objects.filter(user=User.objects.filter(username=request.POST.get('user')).first())
-                form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
+                form.instance.piscina = Piscina.objects.first()
+                #queryset = Piscina.objects.filter(user=User.objects.filter(username=request.POST.get('user')).first())
+                #form.instance.piscina = queryset.get(n_piscina=request.POST.get('n_piscina'))
                 #form.instance.piscina.user = User.objects.filter(username=request.POST.get('user')).first()
             values = form.save()
             values.save()
+            print(values.piscina.id)
+            print(values.piscina.user)
+            print(values.piscina.n_piscina)
             messages.success(request, f'Dati aggiornati correttamente!')
             return HttpResponse("<h1>SI!</h1>")
         return redirect('blog-home2')

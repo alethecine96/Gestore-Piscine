@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PiscinaListView, MiaPiscinaListView, HomeView
+from .views import MiaPiscinaListView, HomeView
 from . import views
 from django.shortcuts import redirect
 

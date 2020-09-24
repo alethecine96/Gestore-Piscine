@@ -44,15 +44,6 @@ def create_pool(request):
     messages.success(request, f'Piscina creata correttamente')
     return redirect('blog-home2')
 
- 
-class PiscinaListView(ListView):
-    model = Value
-    template_name = 'blog/piscina.html'
-    context_object_name = 'values'
-    form_class = PiscinaForm
-    ordering = ['-date']
-    paginate_by = 10
-
 
 class MiaPiscinaListView(ListView):
     model = Value
@@ -88,7 +79,7 @@ def piscina_request(request):
             return redirect('blog-home')
         return redirect('blog-home2')
     return HttpResponse("Failed POST")
-    
+ 
 
 def line_chart(request, username, n_piscina):
     if(request.user.is_authenticated):

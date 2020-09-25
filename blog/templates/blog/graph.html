@@ -17,14 +17,26 @@
         datasets: [{
           data: {{ temperature|safe }},
           backgroundColor: [
-            "#822222"
+            "#82222200"
           ],
+		  borderColor: [
+			"#822222"
+		  ],
           label: 'Temperatura'
         }],
         labels: {{ data|safe }}
       },
       options: {
-        responsive: true
+        responsive: true,
+		scales: {
+			yAxes: [{
+				ticks: {
+				min: 10,
+				max: 40,
+				stepSize: 2,
+				}
+			}]
+		}
       }
     };
 	
@@ -34,14 +46,27 @@
         datasets: [{
           data: {{ ph|safe }},
           backgroundColor: [
-            "#0040FF"
+            "#0040FF00"
           ],
+		  borderColor: [
+		   "#0040FF"
+		  ],
           label: 'ph'
         }],
         labels: {{ data|safe }}
       },
       options: {
-        responsive: true
+        responsive: true,
+		scales: {
+			yAxes: [{
+				ticks: {
+				min: 6,
+				max: 9,
+				stepSize: 1,
+				}
+			}]
+		}
+		
       }
     };
 	
